@@ -12,54 +12,52 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <style>
-  /* Reset & Base */
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Inter',sans-serif; background:#F8F9FA; color:#212529; line-height:1.6; scroll-behavior:smooth; }
+  /* Reset */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #fdfdfd; color: #212529; line-height: 1.6; scroll-behavior: smooth; }
 
   /* Navigation */
-  nav { position: sticky; top:0; background:#ffffff; display:flex; justify-content:center; gap:40px; padding:15px 0; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; }
-  nav a { text-decoration:none; color:#0D6EFD; font-weight:600; transition:color 0.3s; }
-  nav a:hover { color:#0A58CA; }
+  nav { position: sticky; top: 0; background: #fff; display: flex; justify-content: center; gap: 40px; padding: 15px 0; box-shadow: 0 3px 8px rgba(0,0,0,0.05); z-index: 10; }
+  nav a { text-decoration: none; color: #2575fc; font-weight: 600; transition: color 0.3s; }
+  nav a:hover { color: #0d47a1; }
 
   /* Container */
-  .container { max-width:1000px; margin:auto; padding:40px 20px; }
+  .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
 
-  /* Hero */
-  header { background:#ffffff; text-align:center; padding:80px 20px 60px; border-radius:0 0 40px 40px; box-shadow:0 4px 20px rgba(0,0,0,0.05); overflow:hidden; }
-  header img { width:150px; height:150px; border-radius:50%; margin-bottom:20px; border:4px solid #0D6EFD; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.3s; }
-  header h1 { font-size:2.5rem; margin-bottom:15px; color:#212529; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.5s; }
-  header p { font-size:1.2rem; color:#495057; margin-bottom:25px; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.7s; }
-  .btn { display:inline-block; padding:15px 35px; background:#0D6EFD; color:#fff; font-weight:600; border-radius:30px; transition:0.3s; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-  .btn:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.2); }
+  /* Hero Section */
+  header { background: #f4f4f4; text-align: center; padding: 60px 20px; border-radius: 0 0 50px 50px; }
+  header h1 { font-size: 2.5rem; margin-bottom: 15px; color: #212529; }
+  header p { font-size: 1.2rem; margin-bottom: 25px; color: #495057; }
+  .btn { display: inline-block; padding: 15px 35px; background: #2575fc; color: #fff; font-weight: 600; border-radius: 30px; transition: 0.3s; cursor: pointer; }
+  .btn:hover { background: #0d47a1; }
 
-  @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-
-  h2 { font-size:2rem; margin-bottom:20px; text-align:center; color:#212529; }
+  /* Headings */
+  h2 { font-size: 2rem; margin-bottom: 20px; text-align: center; color: #2575fc; }
 
   /* Cards */
-  .cards { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-bottom:40px; }
-  .card { background:#ffffff; padding:30px; border-radius:15px; box-shadow:0 10px 20px rgba(0,0,0,0.05); flex:1 1 250px; transition:transform 0.3s, box-shadow 0.3s; opacity:0; transform:translateY(20px);}
-  .card:hover { transform:translateY(-5px); box-shadow:0 15px 30px rgba(0,0,0,0.1); }
+  .cards { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 40px; }
+  .card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 12px 24px rgba(0,0,0,0.08); flex: 1 1 250px; transition: transform 0.3s, box-shadow 0.3s; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(0,0,0,0.12); }
 
   /* Map */
-  #map { height:400px; width:100%; border-radius:15px; margin-bottom:40px; box-shadow:0 10px 20px rgba(0,0,0,0.1); opacity:0; transform:translateY(20px); }
+  #map { height: 400px; width: 100%; border-radius: 15px; margin-bottom: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-  /* FAQ */
-  .faq { max-width:800px; margin:auto; }
-  .faq details { background:#ffffff; padding:20px; margin-bottom:10px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
-  .faq summary { font-weight:600; cursor:pointer; }
-
-  /* About */
-  .about { text-align:center; margin-bottom:40px; opacity:0; transform:translateY(20px); }
+  /* About Section */
+  .about { text-align: center; margin-bottom: 40px; }
+  .about p { max-width: 700px; margin: 10px auto; }
 
   /* How It Works */
-  ol { margin:20px auto 40px; max-width:700px; padding-left:20px; opacity:0; transform:translateY(20px); }
+  ol { margin: 20px auto 40px; max-width: 700px; padding-left: 20px; }
+  ol li { margin-bottom: 15px; font-weight: 500; }
 
   /* Footer CTA */
-  .cta { text-align:center; margin:60px 0; opacity:0; transform:translateY(20px); }
+  .cta { text-align: center; margin: 60px 0; }
 
   /* Responsive */
-  @media(max-width:768px){ .cards{flex-direction:column;align-items:center;} nav{gap:20px;} }
+  @media (max-width: 768px) {
+    .cards { flex-direction: column; align-items: center; }
+    nav { gap: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -69,108 +67,94 @@
   <a href="#what">What</a>
   <a href="#map-section">Map</a>
   <a href="#pricing">Pricing</a>
-  <a href="#faq">FAQ</a>
+  <a href="#how">How It Works</a>
+  <a href="#about">About</a>
   <a href="#signup">Get Access</a>
 </nav>
 
 <header>
-  <img src="placeholder-face.jpg" alt="Your Photo">
-  <h1>Connect with Your Community Instantly</h1>
-  <p>Access local events, businesses, and services on an intuitive interactive map designed to keep you informed and engaged.</p>
+  <h1>Local Community Connect</h1>
+  <p>I help local communities access timely information about their towns. Explore events, local businesses, and services on a clear, interactive map.</p>
   <a href="#signup" class="btn">Get Started</a>
 </header>
 
 <div class="container">
 
-<section id="who">
-<h2>Who This Platform Serves</h2>
-<div class="cards">
-  <div class="card"><strong>Local Residents:</strong> Stay informed about events, services, and opportunities in your town.</div>
-  <div class="card"><strong>Community Leaders:</strong> Provide citizens with a reliable, easy-to-use local information hub.</div>
-  <div class="card"><strong>Businesses & Nonprofits:</strong> Promote your offerings and reach your target audience effectively.</div>
-</div>
-</section>
+  <section id="who">
+    <h2>Who This Is For</h2>
+    <div class="cards">
+      <div class="card">Community members looking to discover local events, shops, and happenings</div>
+      <div class="card">Community leaders seeking to enhance citizen engagement and connectivity</div>
+      <div class="card">Businesses and non-profits aiming to expand their local reach</div>
+    </div>
+  </section>
 
-<section id="what">
-<h2>What You Receive</h2>
-<div class="cards">
-  <div class="card"><strong>Interactive Map:</strong> Explore all local events, shops, and services in one view.</div>
-  <div class="card"><strong>Information Pages:</strong> Click markers to access event details, contact info, and resources.</div>
-  <div class="card"><strong>Smart Search & Filters:</strong> Quickly find relevant local information tailored to your interests.</div>
-</div>
-</section>
+  <section id="what">
+    <h2>What You Get</h2>
+    <div class="cards">
+      <div class="card">A comprehensive database of your town’s information</div>
+      <div class="card">A searchable, interactive map with location-based details</div>
+      <div class="card">Dedicated pages for events, businesses, and contact information</div>
+    </div>
+  </section>
 
-<section id="map-section">
-<h2>Explore Your Town</h2>
-<div id="map"></div>
-</section>
+  <section id="map-section">
+    <h2>Explore the Map</h2>
+    <div id="map"></div>
+  </section>
 
-<section id="pricing">
-<h2>Pricing</h2>
-<div class="cards">
-  <div class="card"><strong>Individuals:</strong> $1 suggested donation; free with a library card.</div>
-  <div class="card"><strong>Businesses & Organizations:</strong> Scalable plans to maximize your local outreach.</div>
-</div>
-</section>
+  <section id="pricing">
+    <h2>Pricing</h2>
+    <div class="cards">
+      <div class="card">Individuals: $1 suggested donation, free with a library card</div>
+      <div class="card">Businesses & Enterprises: scalable pricing for larger reach</div>
+    </div>
+  </section>
 
-<section>
-<h2>How It Works</h2>
-<ol>
-  <li>Sign in or use your library card for free access.</li>
-  <li>Navigate the interactive map to view events, shops, and local resources.</li>
-  <li>Click markers to see full details and engage with your community.</li>
-</ol>
-</section>
+  <section id="how">
+    <h2>How It Works</h2>
+    <ol>
+      <li>Sign in or use your library card for access</li>
+      <li>Browse the interactive map localized to your area</li>
+      <li>Search by location, type of event, or keyword and click map markers to see full details</li>
+    </ol>
+  </section>
 
-<section class="about">
-<h2>About Me</h2>
-<p>I am a developer, volunteer, and community advocate committed to improving local connectivity.</p>
-<p>This platform is designed to empower communities and make accessing local information seamless.</p>
-<p>Every feature is built personally with a focus on usability and trust.</p>
-<p>I am dedicated to helping residents, leaders, and businesses stay informed and connected.</p>
-</section>
+  <section class="about" id="about">
+    <h2>About Me</h2>
+    <p>I’m a developer, volunteer, and active community member.</p>
+    <p>This platform was built to empower local communities and simplify access to information.</p>
+    <p>Everything here is personally maintained to ensure reliability and ease of use.</p>
+    <p>My mission is to make local engagement simple, actionable, and meaningful.</p>
+  </section>
 
-<section class="faq" id="faq">
-<h2>FAQ</h2>
-<details>
-<summary>How quickly can I get started?</summary>
-<p>Sign in or use your library card, and your interactive map is ready immediately.</p>
-</details>
-<details>
-<summary>Is a library card required?</summary>
-<p>No. Individuals can access the platform with a suggested $1 donation or for free with a library card.</p>
-</details>
-<details>
-<summary>Can businesses and organizations post events?</summary>
-<p>Yes. We provide scalable options for event and service listings.</p>
-</details>
-</section>
-
-<section class="cta" id="signup">
-<h2>Ready to Connect Locally?</h2>
-<a href="https://buy.stripe.com/test_link" class="btn">Get Access Now</a>
-</section>
+  <section class="cta" id="signup">
+    <h2>Start Exploring Your Community</h2>
+    <a href="https://buy.stripe.com/test_link" class="btn">Get Access</a>
+  </section>
 
 </div>
 
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-const map = L.map('map').setView([40.7128, -74.0060],13);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
- attribution:'&copy; OpenStreetMap contributors'
-}).addTo(map);
+  const map = L.map('map').setView([40.7128, -74.0060], 13); // Example coordinates
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
-/* Scroll fade-in animation */
-const faders = document.querySelectorAll('.cards .card, #map, ol, .about, .cta');
-const appearOnScroll = new IntersectionObserver((entries, observer)=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting) return;
-    entry.target.style.opacity=1;
-    entry.target.style.transform='translateY(0)';
-    observer.unobserve(entry.target);
-  });
-},{threshold:0.2});
-faders.forEach(fader => appearOnScroll.observe(fader));
+  // Scroll animation for cards and sections
+  const faders = document.querySelectorAll('.cards .card, #map, ol, .about, .cta');
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.2 });
+
+  faders.forEach(fader => appearOnScroll.observe(fader));
 </script>
 
 </body>
