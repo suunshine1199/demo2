@@ -5,44 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Local Community Connect</title>
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <style>
+  /* Reset & Base */
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Inter',sans-serif; background:#F9FAFB; color:#1F2937; line-height:1.6; scroll-behavior:smooth; overflow-x:hidden; }
+  body { font-family:'Inter',sans-serif; background:#F8F9FA; color:#212529; line-height:1.6; scroll-behavior:smooth; }
 
   /* Navigation */
-  nav { position: sticky; top:0; background:#ffffff; display:flex; justify-content:center; gap:40px; padding:15px 0; box-shadow:0 3px 8px rgba(0,0,0,0.05); z-index:10; }
-  nav a { text-decoration:none; color:#FBBF24; font-weight:600; transition:color 0.3s; }
-  nav a:hover { color:#F59E0B; }
+  nav { position: sticky; top:0; background:#ffffff; display:flex; justify-content:center; gap:40px; padding:15px 0; box-shadow:0 2px 10px rgba(0,0,0,0.05); z-index:1000; }
+  nav a { text-decoration:none; color:#0D6EFD; font-weight:600; transition:color 0.3s; }
+  nav a:hover { color:#0A58CA; }
 
   /* Container */
   .container { max-width:1000px; margin:auto; padding:40px 20px; }
 
-  /* Hero Section */
-  header { background:#ffffff; text-align:center; padding:80px 20px 60px; border-radius:0 0 50px 50px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,0.05);}
-  header img { width:150px; height:150px; margin-bottom:20px; border-radius:50%; border:4px solid #FBBF24; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.3s; }
-  header h1 { font-size:2.5rem; margin-bottom:10px; color:#1F2937; background:linear-gradient(90deg, #FBBF24, #F59E0B); -webkit-background-clip:text; color:transparent; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.5s; }
-  header p { font-size:1.2rem; margin-bottom:25px; color:#4B5563; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.7s; }
-  .btn { display:inline-block; padding:15px 35px; background:linear-gradient(90deg,#FBBF24,#F59E0B); color:#fff; font-weight:600; border-radius:30px; transition:0.3s; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+  /* Hero */
+  header { background:#ffffff; text-align:center; padding:80px 20px 60px; border-radius:0 0 40px 40px; box-shadow:0 4px 20px rgba(0,0,0,0.05); overflow:hidden; }
+  header img { width:150px; height:150px; border-radius:50%; margin-bottom:20px; border:4px solid #0D6EFD; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.3s; }
+  header h1 { font-size:2.5rem; margin-bottom:15px; color:#212529; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.5s; }
+  header p { font-size:1.2rem; color:#495057; margin-bottom:25px; transform:translateY(20px); opacity:0; animation:fadeUp 1s forwards 0.7s; }
+  .btn { display:inline-block; padding:15px 35px; background:#0D6EFD; color:#fff; font-weight:600; border-radius:30px; transition:0.3s; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
   .btn:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.2); }
 
   @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
-  h2 { font-size:2rem; margin-bottom:20px; text-align:center; background:linear-gradient(90deg,#FBBF24,#F59E0B); -webkit-background-clip:text; color:transparent; }
+  h2 { font-size:2rem; margin-bottom:20px; text-align:center; color:#212529; }
 
   /* Cards */
   .cards { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-bottom:40px; }
-  .card { background:#ffffff; padding:30px; border-radius:15px; box-shadow:0 12px 24px rgba(0,0,0,0.08); flex:1 1 250px; transition:transform 0.3s,box-shadow 0.3s; opacity:0; transform:translateY(20px); }
-  .card:hover { transform:translateY(-5px); box-shadow:0 18px 36px rgba(0,0,0,0.12); }
+  .card { background:#ffffff; padding:30px; border-radius:15px; box-shadow:0 10px 20px rgba(0,0,0,0.05); flex:1 1 250px; transition:transform 0.3s, box-shadow 0.3s; opacity:0; transform:translateY(20px);}
+  .card:hover { transform:translateY(-5px); box-shadow:0 15px 30px rgba(0,0,0,0.1); }
 
   /* Map */
   #map { height:400px; width:100%; border-radius:15px; margin-bottom:40px; box-shadow:0 10px 20px rgba(0,0,0,0.1); opacity:0; transform:translateY(20px); }
 
   /* FAQ */
   .faq { max-width:800px; margin:auto; }
-  .faq details { background:#fff; padding:20px; margin-bottom:10px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); transition:all 0.3s; }
+  .faq details { background:#ffffff; padding:20px; margin-bottom:10px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
   .faq summary { font-weight:600; cursor:pointer; }
 
   /* About */
@@ -56,7 +60,6 @@
 
   /* Responsive */
   @media(max-width:768px){ .cards{flex-direction:column;align-items:center;} nav{gap:20px;} }
-
 </style>
 </head>
 <body>
@@ -72,79 +75,79 @@
 
 <header>
   <img src="placeholder-face.jpg" alt="Your Photo">
-  <h1>Connecting Your Community, One Map at a Time</h1>
-  <p>Discover local events, businesses, and happenings instantly. Our smart map puts your town’s pulse right at your fingertips.</p>
-  <a href="#signup" class="btn">Explore Your Town</a>
+  <h1>Connect with Your Community Instantly</h1>
+  <p>Access local events, businesses, and services on an intuitive interactive map designed to keep you informed and engaged.</p>
+  <a href="#signup" class="btn">Get Started</a>
 </header>
 
 <div class="container">
 
 <section id="who">
-<h2>Who This Is For</h2>
+<h2>Who This Platform Serves</h2>
 <div class="cards">
-  <div class="card">Curious Locals: Never miss out on events, hidden gems, or community moments.</div>
-  <div class="card">Community Leaders: Empower your citizens with real-time local info.</div>
-  <div class="card">Businesses & Nonprofits: Reach the right audience, effortlessly.</div>
+  <div class="card"><strong>Local Residents:</strong> Stay informed about events, services, and opportunities in your town.</div>
+  <div class="card"><strong>Community Leaders:</strong> Provide citizens with a reliable, easy-to-use local information hub.</div>
+  <div class="card"><strong>Businesses & Nonprofits:</strong> Promote your offerings and reach your target audience effectively.</div>
 </div>
 </section>
 
 <section id="what">
-<h2>What You Get</h2>
+<h2>What You Receive</h2>
 <div class="cards">
-  <div class="card">Dynamic Town Map: Explore everything your town has to offer in one interactive view.</div>
-  <div class="card">Detailed Event & Contact Pages: Click any point to get all the info you need instantly.</div>
-  <div class="card">Tailored Local Insights: Filters and search let you find exactly what matters to you.</div>
+  <div class="card"><strong>Interactive Map:</strong> Explore all local events, shops, and services in one view.</div>
+  <div class="card"><strong>Information Pages:</strong> Click markers to access event details, contact info, and resources.</div>
+  <div class="card"><strong>Smart Search & Filters:</strong> Quickly find relevant local information tailored to your interests.</div>
 </div>
 </section>
 
 <section id="map-section">
-<h2>See Your Community Come Alive</h2>
+<h2>Explore Your Town</h2>
 <div id="map"></div>
 </section>
 
 <section id="pricing">
 <h2>Pricing</h2>
 <div class="cards">
-  <div class="card">Individuals: $1 suggested donation, free with a library card.</div>
-  <div class="card">Businesses & Enterprises: Flexible plans to expand your reach with precision.</div>
+  <div class="card"><strong>Individuals:</strong> $1 suggested donation; free with a library card.</div>
+  <div class="card"><strong>Businesses & Organizations:</strong> Scalable plans to maximize your local outreach.</div>
 </div>
 </section>
 
 <section>
 <h2>How It Works</h2>
 <ol>
-  <li>Sign In & Access: Quick account setup or use your library card for free.</li>
-  <li>Navigate Your Map: Instantly see local events, shops, and happenings.</li>
-  <li>Explore & Engage: Click markers, discover info pages, and join your community.</li>
+  <li>Sign in or use your library card for free access.</li>
+  <li>Navigate the interactive map to view events, shops, and local resources.</li>
+  <li>Click markers to see full details and engage with your community.</li>
 </ol>
 </section>
 
 <section class="about">
 <h2>About Me</h2>
-<p>I’m a developer, volunteer, and community advocate.</p>
-<p>I built this platform to make local connections effortless.</p>
-<p>Everything here is crafted by me, with a passion for keeping towns vibrant, informed, and connected.</p>
-<p>I’m committed to making local engagement simple, fun, and impactful.</p>
+<p>I am a developer, volunteer, and community advocate committed to improving local connectivity.</p>
+<p>This platform is designed to empower communities and make accessing local information seamless.</p>
+<p>Every feature is built personally with a focus on usability and trust.</p>
+<p>I am dedicated to helping residents, leaders, and businesses stay informed and connected.</p>
 </section>
 
 <section class="faq" id="faq">
 <h2>FAQ</h2>
 <details>
 <summary>How quickly can I get started?</summary>
-<p>Just a few minutes—sign in, and your map is ready to explore.</p>
+<p>Sign in or use your library card, and your interactive map is ready immediately.</p>
 </details>
 <details>
-<summary>Do I need a library card?</summary>
-<p>Not required—$1 suggested donation gets you full access to all features.</p>
+<summary>Is a library card required?</summary>
+<p>No. Individuals can access the platform with a suggested $1 donation or for free with a library card.</p>
 </details>
 <details>
-<summary>Can businesses post events?</summary>
-<p>Absolutely! We offer scalable options to showcase events and services to your community.</p>
+<summary>Can businesses and organizations post events?</summary>
+<p>Yes. We provide scalable options for event and service listings.</p>
 </details>
 </section>
 
 <section class="cta" id="signup">
-<h2>Ready to Explore Your Community?</h2>
+<h2>Ready to Connect Locally?</h2>
 <a href="https://buy.stripe.com/test_link" class="btn">Get Access Now</a>
 </section>
 
@@ -157,9 +160,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
  attribution:'&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-/* Scroll fade-in */
+/* Scroll fade-in animation */
 const faders = document.querySelectorAll('.cards .card, #map, ol, .about, .cta');
-const appearOnScroll = new IntersectionObserver((entries,observer)=>{
+const appearOnScroll = new IntersectionObserver((entries, observer)=>{
   entries.forEach(entry=>{
     if(!entry.isIntersecting) return;
     entry.target.style.opacity=1;
@@ -167,7 +170,7 @@ const appearOnScroll = new IntersectionObserver((entries,observer)=>{
     observer.unobserve(entry.target);
   });
 },{threshold:0.2});
-faders.forEach(fader=>appearOnScroll.observe(fader));
+faders.forEach(fader => appearOnScroll.observe(fader));
 </script>
 
 </body>
